@@ -1,11 +1,24 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import DefaultLayout from "./pages/DefaultLayout.jsx";
+import TaskListPage from './pages/TaskListPage.jsx';
+import AddTaskPage from './pages/AddTaskPage.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1>EJA</h1>
+
+      <BrowserRouter>
+        <Routes>
+
+          <Route element={<DefaultLayout />}>
+            <Route path="/" element={<TaskListPage />} />
+            <Route path="/AddTask" element={<AddTaskPage />} />
+
+          </Route>
+
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
