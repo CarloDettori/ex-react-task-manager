@@ -43,3 +43,15 @@ nav {
 #logo {
     height: 50px;
 }
+
+table {
+    border: 1px solid #212529;
+    border-radius: 21%;
+
+}
+
+th,
+td {
+    padding: 10px 15px;
+    border: 1px solid #212529;
+}
