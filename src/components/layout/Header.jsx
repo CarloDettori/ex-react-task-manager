@@ -9,7 +9,7 @@ export default function Header() {
         <header>
             <img id="logo" src={T} alt="" />
 
-            <nav className="d-flex gap-2">
+            <nav className="d-flex gap-4">
 
 
                 <NavLink className="nav-link button" to="/">TaskList</NavLink>

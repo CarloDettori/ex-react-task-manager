@@ -13,7 +13,7 @@ export default function TaskListPage() {
 
 
     return (
-        <>
+        <section>
             <h1>TASK LIST PAGE</h1>
 
             <table>
@@ -31,6 +31,6 @@ export default function TaskListPage() {
             </table>
 
 
-        </>
+        </section>
     );
 }
