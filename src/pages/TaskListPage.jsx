@@ -14,7 +14,7 @@ export default function TaskListPage() {
 
     return (
         <section>
-            <h1>TASK LIST PAGE</h1>
+            <h1>LISTA TASK</h1>
 
             <table>
 

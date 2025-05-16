@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 export default function AddTaskPage() {
 
     const newTask = {
-        name: "",
+        title: "",
         stat: "",
         dex: "",
     }
@@ -14,17 +14,11 @@ export default function AddTaskPage() {
     const symbols = `!@#$%^&*()-_=+[]{}|;:'\\",.<>?/~`;
     const titleRef = useRef()
     const statRef = useRef()
-    const expRef = useRef()
+    const dexRef = useRef()
 
     const [error, setError] = useState({
-        //name error
-        noName: false,
+        noTitle: false,
         symbolName: false,
-        //stat error
-        noStat: false,
-        //dex error
-        noDex: false,
-        symbolDex: false,
     })
 
 
@@ -32,34 +26,17 @@ export default function AddTaskPage() {
 
         const { name, value, type, checked } = e.target;
 
-        switch (name) {
 
-            case "title":
-                setError((prevError) => ({
-                    ...prevError,
-                    noName: !value,
-                    symbolName: symbols.split("").some((symbol) => value.includes(symbol)),
-                }));
-                break;
 
-            case "stat":
-                setError((prevError) => ({
-                    ...prevError,
-                    noStat: !value,
-                }));
-                break;
-
-            case "dex":
-                setError((prevError) => ({
-                    ...prevError,
-                    noDex: !value,
-                    symbolDex: symbols.split("").some((symbol) => value.includes(symbol)),
-                }));
-                break
-
-            default:
-                console.log("uncontrolled input");
+        if (name === "title") {
+            setError((prevError) => ({
+                ...prevError,
+                noTitle: !value,
+                symbolName: symbols.split("").some((symbol) => value.includes(symbol)),
+            }));
         }
+
+
 
         setFormInput((prev) => ({
             ...prev,
@@ -68,6 +45,19 @@ export default function AddTaskPage() {
         console.log(value)
 
     };
+
+
+
+    const anyError = []
+    const anyInput = []
+    Object.values(error).forEach((value) => {
+        anyError.push(value);
+    })
+    Object.values(formInput).forEach((value) => {
+        anyInput.push(value);
+    });
+    const noError = anyError.every(error => error === false)
+    const noInput = anyInput.every(input => input === "")
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -79,12 +69,10 @@ export default function AddTaskPage() {
         const noError = anyError.every(error => error === false)
 
         if (noError) {
-            const name = nameRef.current.value
-            formInput.name = name
-            const specialization = specRef.current.value
-            formInput.spec = specialization
-            const experience = expRef.current.value
-            formInput.exp = experience
+            const stat = statRef.current.value
+            formInput.spec = stat
+            const dex = dexRef.current.value
+            formInput.exp = dex
             console.log(formInput)
             setFormInput(newTask)
         } else {
@@ -93,78 +81,73 @@ export default function AddTaskPage() {
         }
     };
 
-    const anyError = []
-    const anyInput = []
-    Object.values(error).forEach((value) => {
-        anyError.push(value);
-    })
-    Object.values(newTask).forEach((value) => {
-        anyError.push(value);
-    });
-    const noError = anyError.every(error => error === false)
-    const noInput = anyInput.every(input => input === "")
-
-
-
     return (<section>
 
-        <h1>ADD NEW TASK</h1>
+        <h1>AGGIUNGI UNA NUOVA TASK</h1>
+        <p className="text-end info">i campi con <span style={{ color: "red" }}>*</span> sono obbligatori</p>
         <form onSubmit={handleSubmit}>
 
             <div className="mb-4">
-                <label htmlFor="title" className="form-label">Write a Task Title</label>
+                <label htmlFor="title" className="form-label">Scrivi un <strong>Titolo</strong><span style={{ color: "red" }}> *</span></label>
                 <input
                     ref={titleRef}
                     name="title"
-                    value=""
+                    value={formInput.title}
                     onChange={handleChange}
                     type="text"
                     className="form-control"
                     id="name"
-                    placeholder="Gianpiergiorgio Frastinellucci"
-                    required
+
+
                 />
+                {formInput.title === ""
+                    ? null
+                    : (error.symbolName === true
+                        ? <p className="info" style={{ color: "red" }}>non inserire simboli (solo lettere o numeri)</p>
+                        : <p className="info" style={{ color: "rgb(73, 208, 141)" }}> ✅<strong>OK</strong></p>
+                    )
+                }
             </div>
 
 
-            <p className="form-label">Click and choose a Task State</p>
-            <select name="spec" id="spec" ref={statRef} className="form-control selector" required>
-                <option value="" selected="selected">To do</option>
+            <p className="form-label">Clicca e scegli uno <strong>Stato</strong></p>
+            <select
+                name="spec"
+                id="spec"
+                ref={statRef}
+                className="form-control selector"
+            >
+                <option value="" defaultValue>To do</option>
                 <option value="Backend">Doing</option>
                 <option value="FullStack">Done</option>
             </select>
 
 
             <div className="my-4">
-                <label htmlFor="dex" className="form-label">Write a new Task Description</label>
+                <label htmlFor="dex" className="form-label">Scrivi una <strong>Descrizione</strong></label>
                 <textarea
-                    value={formInput.dex}
-                    onChange={handleChange}
+                    ref={dexRef}
                     name="dex"
                     type="text"
                     className="form-control"
                     id="dex"
-                    placeholder="Go to groceries an buy bananas..."
-                    required
                 />
-                {formInput.dex === ""
-                    ? null
-                    : (error.longDex === true
-                        ? <p style={{ color: "red" }}>Too long</p>
-                        : <p style={{ color: "green" }}>OK</p>
-                    )
-                }
             </div>
+
+
+
+
+
             <div className="d-flex">
                 {
                     noInput
-                        ? < button type="submit" className="btn btn-primary mt-5" disabled>Fill each champ as requested</button> :
+                        ? < button type="submit" className="btn btn-primary mt-5" disabled>Compila i campi come richiesto</button> :
                         (noError
                             ? <button type="submit" className="btn btn-primary mt-5">Invia</button>
-                            : <button type="submit" className="btn btn-primary mt-5" disabled>Some champ is wrong</button>
+                            : <button type="submit" className="btn btn-primary mt-5" disabled>Alcuni campi sono sbagliati</button>
                         )
                 }
-                <button type="reset" onClick={() => { setFormInput(newTask); titleRef.current.focus() }} className="btn btn-danger mt-5 ms-auto">Reset champs</button>
+                <button type="reset" onClick={() => { setFormInput(newTask); titleRef.current.focus() }} className="btn btn-danger mt-5 ms-auto">Reset</button>
             </div>
         </form>
     </section>

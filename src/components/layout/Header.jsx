@@ -12,10 +12,10 @@ export default function Header() {
             <nav className="d-flex gap-4">
 
 
-                <NavLink className="nav-link button" to="/">TaskList</NavLink>
+                <NavLink className="nav-link button" to="/">Lista Task</NavLink>
 
 
-                <NavLink className="nav-link button" to="/AddTask">AddTask</NavLink>
+                <NavLink className="nav-link button" to="/AddTask">Aggiungi Task</NavLink>
 
 
             </nav>

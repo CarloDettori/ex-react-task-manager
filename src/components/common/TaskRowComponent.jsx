@@ -1,10 +1,6 @@
-import { useContext } from "react"
-import { GlobalContext } from "../../context/GlobalContext.jsx"
 import { memo } from "react"
 
 function TaskRowComponent({ tasks }) {
-    console.log(tasks)
-
     return (
         <tr>
             <td style={{ backgroundColor: "rgba(201, 26, 26, 0.17)" }}>{tasks.title}</td>
