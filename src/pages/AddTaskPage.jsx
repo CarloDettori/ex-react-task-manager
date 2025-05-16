@@ -23,27 +23,24 @@ export default function AddTaskPage() {
 
 
     const handleChange = (e) => {
-
         const { name, value, type, checked } = e.target;
 
-
-
         if (name === "title") {
+            // Blocca solo se il PRIMO carattere è uno spazio
+            if (value.length === 1 && value[0] === " ") return;
+
             setError((prevError) => ({
                 ...prevError,
-                noTitle: !value,
+                noTitle: !value.trim(),
                 symbolName: symbols.split("").some((symbol) => value.includes(symbol)),
             }));
         }
 
-
-
+        // Aggiorna sempre lo stato (così puoi scrivere spazi tra le parole)
         setFormInput((prev) => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value
         }));
-        console.log(value)
-
     };
 
 
@@ -69,9 +66,9 @@ export default function AddTaskPage() {
         const noError = anyError.every(error => error === false)
 
         if (noError) {
-            const stat = statRef.current.value
+            const stat = statRef.current.value.trim()
             formInput.spec = stat
-            const dex = dexRef.current.value
+            const dex = dexRef.current.value.trim()
             formInput.exp = dex
             console.log(formInput)
             setFormInput(newTask)
