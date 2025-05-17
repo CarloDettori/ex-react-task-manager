@@ -1,8 +1,14 @@
 import { useRef } from "react"
 import { useState, useEffect } from "react"
+import { useMemo } from "react"
+import useTask from "../hooks/useTasks"
+
+
 
 export default function AddTaskPage() {
+    useEffect(() => { titleRef.current.focus() }, [])
 
+    const { addTask } = useTask()
     const TaskTemplate = {
         title: "",
         description: "",
@@ -21,14 +27,15 @@ export default function AddTaskPage() {
     const descriptionRef = useRef()
 
     const [error, setError] = useState({
-        noTitle: false,
+        noTitle: true,
         symbolName: false,
     })
 
-
+    const virgo = useMemo(() => {
+        return formInput.title === "" && formInput.description === "" && formInput.status === "To do";
+    }, [formInput]);
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-
         if (name === "title") {
             if (value.length === 1 && value[0] === " ") return;
 
@@ -61,41 +68,15 @@ export default function AddTaskPage() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const anyError = []
-        Object.values(error).forEach((value) => {
-            anyError.push(value);
-        });
-        const noError = anyError.every(error => error === false)
+        const status = statusRef.current.value
+        const description = descriptionRef.current.value.trim()
 
-        const url = "http://localhost:3001/tasks";
-        const options = {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-            },
-            body: JSON.stringify(formInput),
-        };
+        formInput.status = status;
+        formInput.description = description;
+        //console.log(formInput)
+        addTask(formInput)
+        setFormInput(TaskTemplate)
 
-        if (noError) {
-            const status = statusRef.current.value
-            const description = descriptionRef.current.value.trim()
-            const newTask = {
-                ...formInput,
-                status,
-                description,
-            };
-            console.log(formInput)
-            fetch(url, options)
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log(data);
-                });
-            setFormInput(TaskTemplate)
-        } else {
-            console.error("vlidazione non consentita")
-            console.error(error)
-        }
     };
 
 
@@ -161,10 +142,10 @@ export default function AddTaskPage() {
 
             <div className="d-flex">
                 {
-                    noInput
+                    noInput || virgo
                         ? < button type="submit" className="btn btn-primary mt-5" disabled>Compila i campi come richiesto</button> :
                         (noError
-                            ? <button type="submit" className="btn btn-primary mt-5">Invia</button>
+                            ? <button type="submit" onClick={() => { titleRef.current.focus() }} className="btn btn-primary mt-5">Invia</button>
                             : <button type="submit" className="btn btn-primary mt-5" disabled>Alcuni campi sono sbagliati</button>
                         )
                 }

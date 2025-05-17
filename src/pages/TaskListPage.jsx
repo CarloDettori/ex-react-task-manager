@@ -7,7 +7,7 @@ import { Button } from "bootstrap";
 export default function TaskListPage() {
 
     //const data = useContext(GlobalContext)
-    const [data, addTask, removeTask, updateTask] = useContext(GlobalContext);
+    const { data, addTask } = useContext(GlobalContext);
 
     //console.log(data);
 
@@ -18,15 +18,19 @@ export default function TaskListPage() {
 
             <table>
 
-                <tr>
-                    <th>Nome</th>
-                    <th>Stato</th>
-                    <th>Data di Creazione</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Stato</th>
+                        <th>Data di Creazione</th>
+                    </tr>
+                </thead>
 
-                {data.map((task) => {
-                    return <TaskRowComponent key={task.id} tasks={task} />
-                })}
+                <tbody>
+                    {data.map((task) => {
+                        return <TaskRowComponent key={task.id} tasks={task} />
+                    })}
+                </tbody>
 
             </table>
 
