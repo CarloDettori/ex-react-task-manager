@@ -37,6 +37,7 @@ export default function useTask() {
                     navigate("/")
                 } else {
                     throw new Error(obj.message);
+                    alert("errore durante la aggiunta")
                 }
             })
     }
@@ -45,21 +46,19 @@ export default function useTask() {
         const url = "http://localhost:3001/tasks/" + id;
         const options = {
             method: "DELETE",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-            },
         };
         fetch(url, options)
             .then((response) => response.json())
             .then((obj) => {
                 if (obj.success === true) {
                     setData(prev => prev.filter(task => String(task.id) !== String(id)))
+                    navigate("/")
                 } else {
                     throw new Error(obj.message);
+                    alert("errore durante la rimozione")
                 }
-                alert("task rimossa")
-                navigate("/")
+
+
             })
     }
 

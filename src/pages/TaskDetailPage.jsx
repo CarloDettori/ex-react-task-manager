@@ -1,20 +1,29 @@
 import { useParams } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext.jsx";
 import useTask from "../hooks/useTasks.jsx";
+import Modal from "../components/common/ModalComponent.jsx";
 
-export default function TaskDetailPage({ title, description, status, createdAt }) {
+
+export default function TaskDetailPage() {
 
     const { id } = useParams();
-    const { data } = useContext(GlobalContext);
     const { removeTask } = useTask()
-
-
+    const { data } = useContext(GlobalContext);
     const task = data.find(t => String(t.id) === id);
 
-    return (
-        <section>
+    const [showModal, setShowModal] = useState(false); // stato per la modale
 
+    const handleDelete = () => setShowModal(true);
+    const handleConfirm = () => {
+        removeTask(id);
+        setShowModal(false);
+    };
+    const handleClose = () => setShowModal(false);
+
+    return (
+        task ? <section>
+            <div className="modal-root"></div>
             <h1>DETTAGLI TASK</h1>
 
             <div className="card">
@@ -27,11 +36,20 @@ export default function TaskDetailPage({ title, description, status, createdAt }
                     <p className="card-text"><strong>Descrizione: </strong>{task.description}</p>
                     <p className="card-text"><strong>Stato: </strong>{task.status}</p>
                     <p className="card-text"><strong>Data di creazione: </strong>{new Date(task.createdAt).toLocaleString()}</p>
-                    <a onClick={() => removeTask(id)} className="btn btn-danger mt-3">Elimina Task</a>
+                    <a onClick={handleDelete} className="btn btn-danger mt-3">Elimina Task</a>
                 </div>
 
             </div>
-
-        </section>
+            {showModal && (
+                <Modal
+                    title="Conferma eliminazione"
+                    content="Sei sicuro di voler eliminare questo task?"
+                    show={showModal}
+                    onClose={handleClose}
+                    onConfirm={handleConfirm}
+                    confirmText=""
+                />
+            )}
+        </section> : <p>loading</p>
     );
 }
