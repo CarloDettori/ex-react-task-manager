@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useContext } from "react"
 import { GlobalContext } from "../context/GlobalContext.jsx"
 import TaskRowComponent from "../components/common/TaskRowComponent.jsx";
-import { Button } from "bootstrap";
+
 
 export default function TaskListPage() {
 
@@ -15,7 +15,7 @@ export default function TaskListPage() {
     return (
         <section>
             <h1>LISTA TASK</h1>
-
+            <p>Clicca su un Task per visualizzare i Dettaagli</p>
             <table>
 
                 <thead>

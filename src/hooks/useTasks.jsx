@@ -1,8 +1,20 @@
 import { useState } from "react";
 import { useContext } from "react"
 import { GlobalContext } from "../context/GlobalContext";
+import { useNavigate } from "react-router-dom";
+
 export default function useTask() {
     const { setData } = useContext(GlobalContext);
+    const navigate = useNavigate();
+    /*async function fetchData(url, option) {
+        fetch(url, option)
+            .then((response) => response.json())
+            .then((obj) => {
+                console.log(data)
+                setData(prev => [...prev, obj.task]);
+                alert("task aggiunta")
+            }).catch(err => console.error(err), alert(err))
+    }*/
 
     function addTask(formInput) {
         console.log(formInput)
@@ -17,16 +29,40 @@ export default function useTask() {
         };
         fetch(url, options)
             .then((response) => response.json())
-            .then((data) => {
-                console.log(data)
-                setData(prev => [...prev, data.task]);
-                alert("task aggiunta")
-            }).catch(err => console.error(err), alert(err))
+            .then((obj) => {
+                if (obj.success === true) {
+                    console.log(obj)
+                    setData(prev => [...prev, obj.task]);
+                    alert("task aggiunta")
+                    navigate("/")
+                } else {
+                    throw new Error(obj.message);
+                }
+            })
     }
 
-    function removeTask() {
-
+    function removeTask(id) {
+        const url = "http://localhost:3001/tasks/" + id;
+        const options = {
+            method: "DELETE",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=UTF-8",
+            },
+        };
+        fetch(url, options)
+            .then((response) => response.json())
+            .then((obj) => {
+                if (obj.success === true) {
+                    setData(prev => prev.filter(task => String(task.id) !== String(id)))
+                } else {
+                    throw new Error(obj.message);
+                }
+                alert("task rimossa")
+                navigate("/")
+            })
     }
+
 
     function updateTask() {
 
