@@ -66,6 +66,15 @@ tr {
     background-color: rgba(255, 255, 255, 0.63);
 }
 
+.task-link {
+    text-decoration: none;
+    color: #212529;
+}
+
+.task-link:hover {
+    color: #0f5ad2;
+}
+
 #status:hover {
     cursor: pointer;
 }

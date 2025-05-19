@@ -20,7 +20,7 @@ export default function TaskListPage() {
 
                 <thead>
                     <tr>
-                        <th>Nome</th>
+                        <th>Titolo</th>
                         <th>Stato</th>
                         <th>Data di Creazione</th>
                     </tr>
@@ -28,12 +28,11 @@ export default function TaskListPage() {
 
                 <tbody>
                     {data.map((task) => {
-                        return <TaskRowComponent key={task.id} tasks={task} />
+                        return <TaskRowComponent key={task.id} task={task} />
                     })}
                 </tbody>
 
             </table>
-
 
         </section>
     );
