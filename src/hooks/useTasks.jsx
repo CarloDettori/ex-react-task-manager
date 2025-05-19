@@ -63,8 +63,25 @@ export default function useTask() {
     }
 
 
-    function updateTask() {
-
+    function updateTask(modalInput) {
+        const url = "http://localhost:3001/tasks/" + id;
+        const options = {
+            method: "PUT",
+            body: JSON.stringify(modalInput),
+        };
+        fetch(url, options)
+            .then((response) => response.json())
+            .then((obj) => {
+                if (obj.success === true) {
+                    console.log(obj)
+                    setData(prev => [...prev]);
+                    alert("task modificata")
+                    navigate("/")
+                } else {
+                    throw new Error(obj.message);
+                    alert("errore durante la modifica")
+                }
+            })
     }
 
     return { addTask, removeTask, updateTask }
