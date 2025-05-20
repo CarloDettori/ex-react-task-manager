@@ -6,15 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function useTask() {
     const { setData } = useContext(GlobalContext);
     const navigate = useNavigate();
-    /*async function fetchData(url, option) {
-        fetch(url, option)
-            .then((response) => response.json())
-            .then((obj) => {
-                console.log(data)
-                setData(prev => [...prev, obj.task]);
-                alert("task aggiunta")
-            }).catch(err => console.error(err), alert(err))
-    }*/
+
 
     function addTask(formInput) {
         console.log(formInput)
@@ -33,7 +25,6 @@ export default function useTask() {
                 if (obj.success === true) {
                     console.log(obj)
                     setData(prev => [...prev, obj.task]);
-                    alert("task aggiunta")
                     navigate("/")
                 } else {
                     throw new Error(obj.message);
@@ -63,25 +54,28 @@ export default function useTask() {
     }
 
 
-    function updateTask(modalInput) {
+    async function updateTask(modalInput, id) {
+        console.log(modalInput)
         const url = "http://localhost:3001/tasks/" + id;
         const options = {
             method: "PUT",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=UTF-8",
+            },
             body: JSON.stringify(modalInput),
         };
-        fetch(url, options)
+        await fetch(url, options)
             .then((response) => response.json())
             .then((obj) => {
+                console.log(obj);
                 if (obj.success === true) {
-                    console.log(obj)
-                    setData(prev => [...prev]);
-                    alert("task modificata")
-                    navigate("/")
+                    setData(prev => prev.map(task => task.id === obj.task.id ? obj.task : task));
+                    return obj.task;
                 } else {
                     throw new Error(obj.message);
-                    alert("errore durante la modifica")
                 }
-            })
+            });
     }
 
     return { addTask, removeTask, updateTask }

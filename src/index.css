@@ -50,20 +50,35 @@ h1 {
 }
 
 table {
-    border: 1px solid #212529;
+
 
     width: 100%;
-    box-shadow: 5px 5px 10px
+
+
 }
 
 th,
 td {
     padding: 10px 15px;
-    border: 1px solid #212529;
 }
 
-tr {
-    background-color: rgba(255, 255, 255, 0.63);
+thead>tr>th {
+    padding: 0;
+    text-align: start;
+}
+
+tbody>tr>td {
+    border: 1px solid #212529
+}
+
+tbody {
+    box-shadow: 5px 5px 10px;
+    background-color: white !important;
+    border: 1px solid #212529
+}
+
+.card {
+    box-shadow: 5px 5px 10px
 }
 
 .task-link {

@@ -15,7 +15,7 @@ export default function TaskListPage() {
     return (
         <section>
             <h1>LISTA TASK</h1>
-            <p>Clicca su un Task per visualizzare i Dettaagli</p>
+            <p className="pb-4">Clicca su un Task per visualizzare i Dettaagli</p>
             <table>
 
                 <thead>

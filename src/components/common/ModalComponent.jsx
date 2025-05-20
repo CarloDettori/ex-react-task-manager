@@ -1,21 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom"
-
+import { createPortal } from "react-dom";
 export default function Modal({ title, content, show, onClose, onConfirm, confirmText }) {
 
-    return ReactDOM.createPortal(
-        <div style={styles.overlay}>
+    return createPortal(
+        show && <div style={styles.overlay}>
             <div style={styles.modal}>
                 <h1>{title}</h1>
-                <p className="p-3 pb-5">{content}</p>
+                <div className="p-3 pb-5">{content}</div>
                 <div className="d-flex">
-                    <button className="btn btn-primary" onClick={onConfirm} style={styles.closeButton} type="button">Conferma</button>
+                    <button className="btn btn-primary" onClick={onConfirm} style={styles.closeButton} type="button">{confirmText}</button>
                     <button className="btn btn-danger ms-auto" onClick={onClose} style={styles.closeButton}>Annulla</button>
-                    {confirmText}
+
+
                 </div>
             </div>
         </div>,
-        document.querySelector(".modal-root")
+        document.body
     );
 }
 
@@ -35,7 +34,8 @@ const styles = {
         background: "#fff",
         padding: "20px",
         borderRadius: "8px",
-        minWidth: "300px",
-        position: "relative"
+        minWidth: "500px",
+        position: "relative",
+        boxShadow: "0px 0px 5px"
     },
 };
