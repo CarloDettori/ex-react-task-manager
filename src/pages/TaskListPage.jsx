@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext } from "react";
+import { useState, useMemo, useContext, useRef, useCallback } from "react";
 import { GlobalContext } from "../context/GlobalContext.jsx";
 import TaskRowComponent from "../components/common/TaskRowComponent.jsx";
 
@@ -15,6 +15,19 @@ export default function TaskListPage() {
     const [sortBy, setSortBy] = useState("createdAt");
     const [sortOrder, setSortOrder] = useState(1);
 
+    // Stato per la ricerca
+    const [searchQuery, setSearchQuery] = useState("");
+    const debounceTimeout = useRef(null);
+
+    // Funzione debounce per la ricerca
+    const handleSearch = useCallback((e) => {
+        const value = e.target.value;
+        if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+        debounceTimeout.current = setTimeout(() => {
+            setSearchQuery(value);
+        }, 400);
+    }, []);
+
     // Gestione click sulle intestazioni
     const handleSort = (column) => {
         if (sortBy === column) {
@@ -25,10 +38,16 @@ export default function TaskListPage() {
         }
     };
 
-    // Memo per ordinare i task
+    // Memo per filtrare e ordinare i task
     const sortedTasks = useMemo(() => {
         if (!data) return [];
-        const tasksCopy = [...data];
+        let filtered = data;
+        if (searchQuery.trim() !== "") {
+            filtered = filtered.filter(task =>
+                task.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
+            );
+        }
+        const tasksCopy = [...filtered];
         tasksCopy.sort((a, b) => {
             let result = 0;
             if (sortBy === "title") {
@@ -41,12 +60,21 @@ export default function TaskListPage() {
             return result * sortOrder;
         });
         return tasksCopy;
-    }, [data, sortBy, sortOrder]);
+    }, [data, sortBy, sortOrder, searchQuery]);
 
     return (
         <section>
             <h1>LISTA TASK</h1>
-            <p className="pb-4">Clicca su un Task per visualizzare i Dettagli</p>
+
+            <div className="mb-4">
+                <input
+                    type="text"
+                    placeholder="Cerca per titolo..."
+                    className="form-control"
+                    onChange={handleSearch}
+                />
+            </div>
+
             <table>
                 <thead>
                     <tr>
@@ -67,6 +95,7 @@ export default function TaskListPage() {
                     ))}
                 </tbody>
             </table>
+            <p className="pt-3">Clicca su un Task per visualizzare i Dettagli</p>
         </section>
     );
 }
