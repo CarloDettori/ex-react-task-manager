@@ -11,15 +11,15 @@ const STATUS_ORDER = {
 export default function TaskListPage() {
     const { data } = useContext(GlobalContext);
 
-    // Stato per ordinamento
+
     const [sortBy, setSortBy] = useState("createdAt");
     const [sortOrder, setSortOrder] = useState(1);
 
-    // Stato per la ricerca
+
     const [searchQuery, setSearchQuery] = useState("");
     const debounceTimeout = useRef(null);
 
-    // Funzione debounce per la ricerca
+
     const handleSearch = useCallback((e) => {
         const value = e.target.value;
         if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
@@ -28,7 +28,7 @@ export default function TaskListPage() {
         }, 400);
     }, []);
 
-    // Gestione click sulle intestazioni
+
     const handleSort = (column) => {
         if (sortBy === column) {
             setSortOrder((prev) => prev * -1);
@@ -38,7 +38,7 @@ export default function TaskListPage() {
         }
     };
 
-    // Memo per filtrare e ordinare i task
+
     const sortedTasks = useMemo(() => {
         if (!data) return [];
         let filtered = data;
@@ -75,7 +75,7 @@ export default function TaskListPage() {
                 />
             </div>
 
-            <table>
+            {sortedTasks.length > 0 ? <><table>
                 <thead>
                     <tr>
                         <th style={{ cursor: "pointer" }} onClick={() => handleSort("title")}>
@@ -95,7 +95,8 @@ export default function TaskListPage() {
                     ))}
                 </tbody>
             </table>
-            <p className="pt-3">Clicca su un Task per visualizzare i Dettagli</p>
+                <p className="pt-3">Clicca su un Task per visualizzare i Dettagli</p></> : <p className="pt-3">Nessuna Task trovata</p>
+            }
         </section>
     );
 }
