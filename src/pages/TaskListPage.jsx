@@ -52,11 +52,13 @@ export default function TaskListPage() {
             let result = 0;
             if (sortBy === "title") {
                 result = a.title.localeCompare(b.title);
+
             } else if (sortBy === "status") {
                 result = STATUS_ORDER[a.status] - STATUS_ORDER[b.status];
             } else if (sortBy === "createdAt") {
                 result = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
             }
+            console.log(result)
             return result * sortOrder;
         });
         return tasksCopy;

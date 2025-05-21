@@ -20,14 +20,12 @@ header {
 
 nav {
     align-items: center;
-    padding: 20px;
+    padding: 10px;
 }
 
 .nav-link:hover {
     transform: scale(1.2);
 }
-
-
 
 main {
     padding: 50px;
@@ -48,7 +46,6 @@ h1 {
 .info {
     font-size: 70%;
 }
-
 
 table {
 
@@ -95,7 +92,6 @@ tbody {
 #status:hover {
     cursor: pointer;
 }
-
 
 footer {
     justify-content: center;

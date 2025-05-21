@@ -6,7 +6,7 @@ const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
 
-    const url = import.meta.env.VITE_URL || "http://localhost:3001/tasks"
+    const url = import.meta.env.VITE_URL + "/tasks" || "http://localhost:3001/tasks"
     //console.log(url)
     const [data, setData] = useState([])
     async function fechData(url) {

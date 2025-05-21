@@ -24,7 +24,7 @@ export default function TaskDetailPage() {
 
             <div className="card">
 
-                <h2 className="card-header p-4 text-center">
+                <h2 className="card-header p-4">
                     {task.title}
                 </h2>
 
