@@ -68,7 +68,7 @@ export default function TaskListPage() {
         <section>
             <h1>LISTA TASK</h1>
 
-            <div className="mb-4">
+            <div className="my-4">
                 <input
                     type="text"
                     placeholder="Cerca per titolo..."
