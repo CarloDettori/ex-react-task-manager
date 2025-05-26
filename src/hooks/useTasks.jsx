@@ -27,8 +27,8 @@ export default function useTask() {
                     setData(prev => [...prev, obj.task]);
                     navigate("/")
                 } else {
-                    throw new Error(obj.message);
                     alert("errore durante la aggiunta")
+                    throw new Error(obj.message);
                 }
             })
     }
@@ -45,8 +45,9 @@ export default function useTask() {
                     setData(prev => prev.filter(task => String(task.id) !== String(id)))
                     navigate("/")
                 } else {
-                    throw new Error(obj.message);
                     alert("errore durante la rimozione")
+                    throw new Error(obj.message);
+
                 }
 
 
@@ -71,8 +72,10 @@ export default function useTask() {
                 console.log(obj);
                 if (obj.success === true) {
                     setData(prev => prev.map(task => task.id === obj.task.id ? obj.task : task));
+                    navigate("/")
                     return obj.task;
                 } else {
+                    alert("errore durante la modifica")
                     throw new Error(obj.message);
                 }
             });

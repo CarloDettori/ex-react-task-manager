@@ -17,7 +17,7 @@ export default function TaskListPage() {
 
 
     const [searchQuery, setSearchQuery] = useState("");
-    const debounceTimeout = useRef(null);
+    const debounceTimeout = useState(null);
 
 
     const handleSearch = useCallback((e) => {
