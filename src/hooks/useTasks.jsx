@@ -54,7 +54,7 @@ export default function useTask() {
     }
 
     async function updateTask(modalInput, id) {
-        console.log(modalInput)
+        //console.log(modalInput)
         const url = "http://localhost:3001/tasks/" + id;
         const options = {
             method: "PUT",
@@ -67,7 +67,7 @@ export default function useTask() {
         await fetch(url, options)
             .then((response) => response.json())
             .then((obj) => {
-                console.log(obj);
+                //console.log(obj);
                 if (obj.success === true) {
                     setData(prev => prev.map(task => task.id === obj.task.id ? obj.task : task));
                     navigate("/")

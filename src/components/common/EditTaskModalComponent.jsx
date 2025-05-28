@@ -11,9 +11,9 @@ export default function EditTaskModalComponent({ show, onClose, task, onSave, on
     useEffect(() => {
         if (task) {
             setFormInput({
-                title: task.title || "",
-                description: task.description || "",
-                status: task.status || "To do",
+                title: task?.title || "",
+                description: task?.description || "",
+                status: task?.status || "To do",
             });
         }
     }, [task]);
@@ -66,7 +66,7 @@ export default function EditTaskModalComponent({ show, onClose, task, onSave, on
     const editFormRef = useRef()
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(formInput)
+        //console.log(formInput)
         if (
             !formInput.title.trim() || formInput.title.trim().includes(symbols) || !["To do", "Doing", "Done"].includes(formInput.status)
         ) {
@@ -140,11 +140,19 @@ export default function EditTaskModalComponent({ show, onClose, task, onSave, on
                     </div>
 
 
-                    <div className="d-flex">
-                        <button type="reset" onClick={() => {
+                    <div className="d-flex justify-content-center gap-2">
+                        <button type="button" onClick={() => {
                             setFormInput(task);
+                            console.log(task.status)
                             titleRef.current.focus()
-                        }} className="btn btn-danger mt-4 mx-auto">Reset</button>
+                        }} className="btn btn-outline-danger mt-4">Reset</button>
+                        <button type="button" onClick={() => {
+                            setFormInput({
+                                title: "",
+                                description: "",
+                                status: "To do",
+                            });
+                        }} className="btn btn-outline-danger mt-4">Cancella tutto</button>
                     </div>
 
                 </form>
