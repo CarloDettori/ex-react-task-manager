@@ -2,7 +2,7 @@ import { useState, useMemo, useContext, useRef, useCallback } from "react";
 import { GlobalContext } from "../context/GlobalContext.jsx";
 import TaskRowComponent from "../components/common/TaskRowComponent.jsx";
 
-const STATUS_ORDER = {
+const statusOrder = {
     "To do": 0,
     "Doing": 1,
     "Done": 2,
@@ -12,7 +12,6 @@ export default function TaskListPage() {
 
     const { data } = useContext(GlobalContext);
 
-    const [searchQuery, setSearchQuery] = useState("");
 
     function debounce(callback, delay) {
         let timer;
@@ -25,8 +24,10 @@ export default function TaskListPage() {
         }
     }
 
-    const handleSearch = debounce((e) => {
-        const value = e.target.value;
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const handleSearch = debounce((event) => {
+        const value = event.target.value;
         setSearchQuery(value)
     }, 400)
 
@@ -44,29 +45,45 @@ export default function TaskListPage() {
         }
     };
 
+
+
     const sortedTasks = useMemo(() => {
+
         if (!data) return [];
+
+
         let filtered = data;
+
         if (searchQuery.trim() !== "") {
             filtered = filtered.filter(task =>
                 task.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
             );
         }
+
+
+
         const tasksCopy = [...filtered];
+
         tasksCopy.sort((a, b) => {
+
             let result = 0;
+
             if (sortBy === "title") {
                 result = a.title.localeCompare(b.title);
 
             } else if (sortBy === "status") {
-                result = STATUS_ORDER[a.status] - STATUS_ORDER[b.status];
+                result = statusOrder[a.status] - statusOrder[b.status];
+
             } else if (sortBy === "createdAt") {
                 result = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+
             }
-            console.log(result)
+            //console.log(result)
             return result * sortOrder;
         });
+
         return tasksCopy;
+
     }, [data, sortBy, sortOrder, searchQuery]);
 
 

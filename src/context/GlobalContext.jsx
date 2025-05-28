@@ -1,7 +1,4 @@
-import { createContext } from "react";
-import { useContext } from "react"
-import { useState, useEffect } from "react";
-
+import { createContext, useState, useEffect } from "react";
 const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
@@ -32,6 +29,7 @@ const GlobalProvider = ({ children }) => {
             .finally(() => { console.log("fetch end") })
     }, [])
     //console.log(data)
+
 
 
     return (

@@ -1,14 +1,14 @@
-import { useRef } from "react"
-import { useState, useEffect } from "react"
-import { useMemo } from "react"
+import { useRef, useState, useEffect, useMemo } from "react"
 import useTask from "../hooks/useTasks"
 
 
 
 export default function AddTaskPage() {
-    useEffect(() => { titleRef.current.focus() }, [])
 
+    useEffect(() => { titleRef.current.focus() }, [])
     const { addTask } = useTask()
+    const symbols = `!@#$%^&*()-_=+[]{}|;:'\\",.<>?/~`;
+
     const TaskTemplate = {
         title: "",
         description: "",
@@ -21,7 +21,6 @@ export default function AddTaskPage() {
         status: "To do",
     })
 
-    const symbols = `!@#$%^&*()-_=+[]{}|;:'\\",.<>?/~`;
     const titleRef = useRef()
     const statusRef = useRef()
     const descriptionRef = useRef()
