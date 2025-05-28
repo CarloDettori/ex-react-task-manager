@@ -143,7 +143,7 @@ export default function EditTaskModalComponent({ show, onClose, task, onSave, on
                     <div className="d-flex justify-content-center gap-2">
                         <button type="button" onClick={() => {
                             setFormInput(task);
-                            console.log(task.status)
+                            //console.log(task.status)
                             titleRef.current.focus()
                         }} className="btn btn-outline-danger mt-4">Reset</button>
                         <button type="button" onClick={() => {
