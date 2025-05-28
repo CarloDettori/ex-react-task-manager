@@ -9,25 +9,31 @@ const STATUS_ORDER = {
 };
 
 export default function TaskListPage() {
+
     const { data } = useContext(GlobalContext);
+
+    const [searchQuery, setSearchQuery] = useState("");
+
+    function debounce(callback, delay) {
+        let timer;
+
+        return (value) => {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                callback(value)
+            }, delay)
+        }
+    }
+
+    const handleSearch = debounce((e) => {
+        const value = e.target.value;
+        setSearchQuery(value)
+    }, 400)
+
 
 
     const [sortBy, setSortBy] = useState("createdAt");
     const [sortOrder, setSortOrder] = useState(1);
-
-
-    const [searchQuery, setSearchQuery] = useState("");
-    const debounceTimeout = useState(null);
-
-
-    const handleSearch = useCallback((e) => {
-        const value = e.target.value;
-        if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
-        debounceTimeout.current = setTimeout(() => {
-            setSearchQuery(value);
-        }, 400);
-    }, []);
-
 
     const handleSort = (column) => {
         if (sortBy === column) {
@@ -37,7 +43,6 @@ export default function TaskListPage() {
             setSortOrder(1);
         }
     };
-
 
     const sortedTasks = useMemo(() => {
         if (!data) return [];
@@ -63,6 +68,11 @@ export default function TaskListPage() {
         });
         return tasksCopy;
     }, [data, sortBy, sortOrder, searchQuery]);
+
+
+
+
+
 
     return (
         <section>
