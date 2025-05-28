@@ -66,13 +66,13 @@ thead>tr>th {
 }
 
 tbody>tr>td {
-    border: 1px solid #212529
+    border: 1px solid #2125291c
 }
 
 tbody {
     box-shadow: 5px 5px 10px;
     background-color: white !important;
-    border: 1px solid #212529
+    border: 1px solid #2125291c
 }
 
 .card {
