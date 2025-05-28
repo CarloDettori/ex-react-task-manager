@@ -60,8 +60,6 @@ export default function EditTaskModalComponent({ show, onClose, task, onSave, on
     Object.values(formInput).forEach((value) => {
         anyInput.push(value);
     });
-    const noError = anyError.every(error => error === false)
-    const noInput = anyInput.every(input => input === "")
 
 
 
