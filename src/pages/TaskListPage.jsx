@@ -104,27 +104,35 @@ export default function TaskListPage() {
                 />
             </div>
 
-            {sortedTasks.length > 0 ? <><table>
-                <thead>
-                    <tr>
-                        <th style={{ cursor: "pointer" }} onClick={() => handleSort("title")}>
-                            Titolo {sortBy === "title" ? (sortOrder === 1 ? "▲" : "▼") : ""}
-                        </th>
-                        <th style={{ cursor: "pointer" }} onClick={() => handleSort("status")}>
-                            Stato {sortBy === "status" ? (sortOrder === 1 ? "▲" : "▼") : ""}
-                        </th>
-                        <th style={{ cursor: "pointer" }} onClick={() => handleSort("createdAt")}>
-                            Data di Creazione {sortBy === "createdAt" ? (sortOrder === 1 ? "▲" : "▼") : ""}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sortedTasks.map((task) => (
-                        <TaskRowComponent key={task.id} task={task} />
-                    ))}
-                </tbody>
-            </table>
-                <p className="pt-3">Clicca su un Task per visualizzare i Dettagli</p></> : <p className="pt-3">Nessuna Task trovata</p>
+            {sortedTasks.length > 0 ?
+                <><table>
+
+                    <thead>
+
+                        <tr>
+                            <th style={{ cursor: "pointer" }} onClick={() => handleSort("title")}>
+                                Titolo {sortBy === "title" ? (sortOrder === 1 ? "▲" : "▼") : ""}
+                            </th>
+
+                            <th style={{ cursor: "pointer" }} onClick={() => handleSort("status")}>
+                                Stato {sortBy === "status" ? (sortOrder === 1 ? "▲" : "▼") : ""}
+                            </th>
+
+                            <th style={{ cursor: "pointer" }} onClick={() => handleSort("createdAt")}>
+                                Data di Creazione {sortBy === "createdAt" ? (sortOrder === 1 ? "▲" : "▼") : ""}
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        {sortedTasks.map((task) => (
+                            <TaskRowComponent key={task.id} task={task} />
+                        ))}
+                    </tbody>
+
+                </table>
+                    <p className="pt-3">Clicca su un Task per visualizzare i Dettagli</p></> : <p className="pt-3">Nessuna Task trovata</p>
             }
         </section>
     );

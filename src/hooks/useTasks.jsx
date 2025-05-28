@@ -1,12 +1,11 @@
-import { useState } from "react";
 import { useContext } from "react"
 import { GlobalContext } from "../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
 
 export default function useTask() {
+
     const { setData } = useContext(GlobalContext);
     const navigate = useNavigate();
-
 
     function addTask(formInput) {
         console.log(formInput)
@@ -53,7 +52,6 @@ export default function useTask() {
 
             })
     }
-
 
     async function updateTask(modalInput, id) {
         console.log(modalInput)

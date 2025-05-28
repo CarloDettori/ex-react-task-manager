@@ -1,10 +1,6 @@
-import React from "react";
-import ReactDOM from "react-dom"
 import { useParams } from "react-router-dom";
-import { useContext, useState, useRef, useMemo, useEffect } from "react";
-import useTask from "../../hooks/useTasks.jsx";
+import { useState, useRef, useEffect } from "react";
 import Modal from "../common/ModalComponent.jsx";
-import { GlobalContext } from "../../context/GlobalContext.jsx";
 
 export default function EditTaskModalComponent({ show, onClose, task, onSave, onConfirm, confirmText }) {
 
@@ -21,7 +17,7 @@ export default function EditTaskModalComponent({ show, onClose, task, onSave, on
             });
         }
     }, [task]);
-    console.log(task)
+    //console.log(task)
 
     const symbols = `!@#$%^&*()-_=+[]{}|;:'\\",.<>?/~`;
     const titleRef = useRef()
@@ -118,7 +114,6 @@ export default function EditTaskModalComponent({ show, onClose, task, onSave, on
                         }
                     </div>
 
-
                     <p className="form-label">Clicca e scegli uno <strong>Stato</strong></p>
                     <select
                         name="status"
@@ -132,7 +127,6 @@ export default function EditTaskModalComponent({ show, onClose, task, onSave, on
                         <option value="Doing">Doing</option>
                         <option value="Done">Done</option>
                     </select>
-
 
                     <div className="my-4">
                         <label htmlFor="description" className="form-label">Scrivi una <strong>Descrizione</strong></label>
@@ -148,15 +142,13 @@ export default function EditTaskModalComponent({ show, onClose, task, onSave, on
                     </div>
 
 
-
-
-
                     <div className="d-flex">
                         <button type="reset" onClick={() => {
                             setFormInput(task);
                             titleRef.current.focus()
                         }} className="btn btn-danger mt-4 mx-auto">Reset</button>
                     </div>
+
                 </form>
             }
 
